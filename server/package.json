@@ -1,0 +1,42 @@
+{
+  "name": "adonis-fullstack-app",
+  "version": "4.0.0",
+  "adonis-version": "4.0.0",
+  "description": "The fullstack application boilerplate for Adonisjs",
+  "main": "index.js",
+  "scripts": {
+    "serve:dev": "npm run watch:database & npm run watch:server",
+    "watch:server": "./node_modules/.bin/nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
+    "watch:database": "./node_modules/.bin/nodemon --watch database -x npm run migrate",
+    "migrate": "adonis migration:rollback && adonis migration:run",
+    "serve": "node server.js",
+    "test": "node ace test"
+  },
+  "keywords": [
+    "adonisjs",
+    "adonis-app"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@adonisjs/ace": "^4.0.7",
+    "@adonisjs/auth": "^2.0.10",
+    "@adonisjs/bodyparser": "^1.0.8",
+    "@adonisjs/cli": "^3.0.17",
+    "@adonisjs/cors": "^1.0.2",
+    "@adonisjs/fold": "^4.0.5",
+    "@adonisjs/framework": "^4.0.27",
+    "@adonisjs/ignitor": "^1.0.14",
+    "@adonisjs/lucid": "^4.0.22",
+    "@adonisjs/session": "^1.0.19",
+    "@adonisjs/shield": "^1.0.4",
+    "eslint": "^4.10.0",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.12.1"
+  },
+  "devDependencies": {},
+  "autoload": {
+    "App": "./app"
+  }
+}
