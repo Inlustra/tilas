@@ -10,6 +10,7 @@
     "watch:database": "./node_modules/.bin/nodemon --watch database -x npm run migrate",
     "migrate": "adonis migration:rollback && adonis migration:run",
     "serve": "node server.js",
+    "lint": "standard",
     "test": "node ace test"
   },
   "keywords": [
@@ -33,10 +34,19 @@
     "@adonisjs/shield": "^1.0.4",
     "eslint": "^4.10.0",
     "mysql": "^2.15.0",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "standard": "^10.0.3"
   },
   "devDependencies": {},
   "autoload": {
     "App": "./app"
+  },
+  "standard": {
+    "ignore": [
+      "templates"
+    ],
+    "globals": [
+      "use"
+    ]
   }
 }
