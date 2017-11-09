@@ -17,5 +17,7 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 
-Route.post('/auth/login', 'UserController.login')
-Route.post('/auth/register', 'UserController.register')
+Route.post('/api/auth/login', 'UserController.login')
+Route.post('/api/auth/register', 'UserController.register')
+Route.route('/api/*', async () => {}, ['GET', 'POST', 'OPTIONS', 'PUT', 'HEAD'])
+Route.route('*', async () => {}, ['GET'])

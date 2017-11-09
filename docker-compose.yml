@@ -1,5 +1,6 @@
 version: '3.3'
 services:
+
   database:
     image: mysql
     volumes:
@@ -7,14 +8,25 @@ services:
     ports:
       - '3306:3306'
     env_file:
-      - database/.docker.env
+      - database.docker.env
+
   server:
-    image: nodeapp
     ports:
       - '3333:3333'
     volumes:
-      - './server/:/usr/tilas/'
-      - './server.dev.env:/usr/tilas/.env'
+      - './server/:/usr/tilas/server/'
+      - './server.dev.env:/usr/tilas/server/.env'
     build: ./server/
     depends_on:
       - database
+
+  client:
+    ports:
+      - '80:80'
+    volumes:
+      - './client/:/usr/tilas/client/'
+    build: ./client/
+    env_file:
+      - client.docker.env
+    depends_on:
+      - server

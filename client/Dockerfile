@@ -1,6 +1,6 @@
 FROM node:8.3
 
-ENV CONTAINER_PATH /usr/tilas/server
+ENV CONTAINER_PATH /usr/tilas/client
 
 RUN mkdir -p $CONTAINER_PATH
 
@@ -9,8 +9,6 @@ WORKDIR $CONTAINER_PATH
 
 RUN npm install
 
-RUN npm i -g nodemon
-
 EXPOSE 80
 
-ENTRYPOINT npm run serve:dev
+ENTRYPOINT npm start
