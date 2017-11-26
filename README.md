@@ -1,31 +1,41 @@
-# Adonis fullstack application
+# A Server, Client and Database with built in login/register and social auth
 
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
+## Why?
 
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
+I'm creating this a base for projects to come, often I have an idea and want to get started on something simple, end up spending hours scouring the best way to implement authentication and all of that jazz.
 
-## Setup
+I decided that enough is enough and to write myself a quick base to work from.
 
-Use the adonis command to install the blueprint
+TLDR:
+* Nicely structured.
+* Docker configured and exposed.
+* Authentication is already done.
+* Environment variable files already configured
+* MySQL database
 
-```bash
-adonis new yardstick
-```
+### Getting started...
 
-or manually clone the repo and then run `npm install`.
+`docker-compose up`
 
+1 thing... I did have to faff with the MySQL database permissions but I can't for the life of me remember what it was...
 
-### Migrations
+## What?
 
-Run the following command to run startup migrations.
+This project contains the following:
 
-```js
-adonis migration:run
-```
+### Server: AdonisJS 4
+
+A simple AdonisJS server with JWT and social integration enabled.
+
+Will startup in the docker container on port 3333 (Already exposed!)
+
+You can check in `server.dev.env` for any environment configuration (Good to change the APP_KEY for any new projects)
+
+### Client: ReactJS with Redux and Redux-Observables
+
+Social auth already enabled, will not be adding any styling libraries apart from the necessary.
+
+create-react-app is configured to automatically proxy any calls to the [server](#server-adonisjs-4), check the package.json!
+
+### docker-compose.yml
+Will initialise the Server and Client whilst also spinning up the MySQL database for the server.
