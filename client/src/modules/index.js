@@ -11,7 +11,7 @@ const epicMiddleware = createEpicMiddleware(
 )
 
 const rootReducer = combineReducers({
-  router: routerReducer,
+  router: routerReducer
 })
 
 export const setupStore = history => {

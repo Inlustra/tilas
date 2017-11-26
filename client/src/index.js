@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import { setupStore } from './modules'
 import App from './containers/App'
-import registerServiceWorker from './common/registerServiceWorker';
+import registerServiceWorker from './common/registerServiceWorker'
 import { createBrowserHistory } from 'history'
 
 const history = createBrowserHistory()
@@ -19,4 +19,5 @@ render(
   </Provider>,
   document.querySelector('#root')
 )
-registerServiceWorker();
+
+registerServiceWorker()
