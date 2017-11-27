@@ -2,23 +2,24 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import { combineEpics, createEpicMiddleware } from 'redux-observable'
 import { composeWithDevTools } from 'redux-devtools-extension'
-
-const epicMiddleware = createEpicMiddleware(
-  combineEpics(),
-  {
-    dependencies: {}
-  }
-)
+import authEpics from './auth/auth.epics'
+import entityReducer from './entities/entities.module'
 
 const rootReducer = combineReducers({
-  router: routerReducer
+  router: routerReducer,
+  entities: entityReducer
 })
 
-export const setupStore = history => {
+const epics = [...authEpics]
+
+export const setupStore = dependencies => {
   const store = createStore(
     rootReducer,
     composeWithDevTools(
-      applyMiddleware(routerMiddleware(history), epicMiddleware)
+      applyMiddleware(
+        routerMiddleware(dependencies.history),
+        createEpicMiddleware(combineEpics(...epics), { dependencies })
+      )
     )
   )
 
