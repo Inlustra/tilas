@@ -8,10 +8,8 @@ action$
   .map(toPayload)
   .switchMap(({email, password}) =>
     api
-      .post('/api/login', { email, password })
-      .concatMap(({ user, token }) => [
-        setToken(token)
-      ])
+      .post('/api/auth/login', { email, password })
+      .flatMap(({ user, token }) => setToken(token))
   )
 
 export default [performLogin$]
