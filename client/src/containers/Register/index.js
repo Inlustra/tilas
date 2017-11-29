@@ -1,26 +1,27 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { performLogin } from '../../modules/auth/auth.module';
+import { performRegister } from '../../modules/auth/auth.module';
 
-class LoginPage extends React.Component {
+class RegisterPage extends React.Component {
 
     state = {
+        name: '',
         email: '',
         password: ''
     }
 
-    handleInputChange = ({target}) => {
+    handleInputChange = ({ target }) => {
         this.setState({
-          [target.name]: target.value
+            [target.name]: target.value
         });
     }
 
     handleSubmit = (event) => {
         event.preventDefault()
-        const { email, password } = this.state
-        if (email && password) {
-            this.props.performLogin(email, password)
+        const { name, email, password } = this.state
+        if (name && email && password) {
+            this.props.performRegister(name, email, password)
         }
     }
 
@@ -29,6 +30,14 @@ class LoginPage extends React.Component {
             <div>
                 <h1>Login</h1>
                 <form onSubmit={this.handleSubmit}>
+                    <div>
+                        <label htmlFor="name">Name</label>
+                        <input type="text"
+                            autoComplete="name"
+                            name="name"
+                            value={this.state.name}
+                            onChange={this.handleInputChange} />
+                    </div>
                     <div>
                         <label htmlFor="email">Email</label>
                         <input type="email"
@@ -55,10 +64,10 @@ class LoginPage extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    performLogin
+    performRegister
 }, dispatch)
 
 export default connect(
     null,
     mapDispatchToProps
-)(LoginPage)
+)(RegisterPage)

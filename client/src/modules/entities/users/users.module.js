@@ -1,4 +1,6 @@
 import { ADD_ENTITIES } from '../entities.module'
+import { userSchema } from '../schemas'
+import { denormalize } from 'normalizr'
 
 const reducer = (state = {}, action) => {
     switch (action.type) {
@@ -18,4 +20,7 @@ const reducer = (state = {}, action) => {
     }
 }
 
+export const selectHydrated = (state, id) => denormalize(id, userSchema, state);
+
 export default reducer;
+

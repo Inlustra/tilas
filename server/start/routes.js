@@ -19,5 +19,6 @@ Route.on('/').render('welcome')
 
 Route.post('/api/auth/login', 'UserController.login')
 Route.post('/api/auth/register', 'UserController.register')
+Route.post('/api/ping', 'TestController.authedHelloWorld').middleware(['auth'])
 Route.route('/api/*', async () => {}, ['GET', 'POST', 'OPTIONS', 'PUT', 'HEAD'])
 Route.route('*', async () => {}, ['GET'])
