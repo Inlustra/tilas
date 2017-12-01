@@ -18,7 +18,7 @@ class ExceptionHandler {
    *
    * @return {void}
    */
-  async handle (error, { request, response }) {
+  async handle(error, { request, response }) {
     response.status(error.status).send(error.message)
   }
 
@@ -32,7 +32,7 @@ class ExceptionHandler {
    *
    * @return {void}
    */
-  async report (error, { request }) {
+  async report(error, { request }) {
     console.log(error)
     console.log(error.name)
   }

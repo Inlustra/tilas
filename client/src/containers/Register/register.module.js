@@ -14,7 +14,7 @@ const CLEAR = 'pages/register/CLEAR'
 // Reducer
 const initState = {
   error: null,
-  loading: false
+  loading: false,
 }
 
 const reducer = (state = initState, action) => {
@@ -36,13 +36,16 @@ const reducer = (state = initState, action) => {
 
 export const getRegisterState = state => state.pages[moduleName]
 export const getError = createSelector(getRegisterState, state => state.error)
-export const isLoading = createSelector(getRegisterState, state => state.loading)
+export const isLoading = createSelector(
+  getRegisterState,
+  state => state.loading,
+)
 
 // Actions
 
 export const submit = (name, email, password) => ({
   type: SUBMIT,
-  payload: { name, email, password }
+  payload: { name, email, password },
 })
 
 export const success = () => ({ type: SUCCESS })
@@ -55,13 +58,14 @@ export const submit$ = (action$, _, { authClient }) =>
     .ofType(SUBMIT)
     .map(({ payload }) => payload)
     .switchMap(({ name, email, password }) =>
-      authClient.register(name, email, password)
+      authClient
+        .register(name, email, password)
         .concatMap(({ user, token }) => [
           addEntities(user, userSchema),
           setAuthUser(user.id),
-          setAuthTokens(token.token, token.refreshToken)
+          setAuthTokens(token.token, token.refreshToken),
         ])
-        .catch(failed$(FAILED))
+        .catch(failed$(FAILED)),
     )
 
 export const epics = [submit$]

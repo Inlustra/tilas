@@ -1,0 +1,10 @@
+{
+  "singleQuote": true,
+  "semi": false,
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "excludeFiles": ["database/**"]
+    }
+  ]
+}

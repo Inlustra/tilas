@@ -17,7 +17,7 @@
     "rxjs": "^5.5.2"
   },
   "devDependencies": {
-    "standard": "*"
+    "prettier": "^1.8.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,6 +25,9 @@
     "lint": "standard",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   },
   "proxy": "http://server:3333"
 }

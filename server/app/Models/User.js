@@ -3,8 +3,7 @@
 const Model = use('Model')
 
 class User extends Model {
-
-  static get hidden () {
+  static get hidden() {
     return ['password']
   }
 

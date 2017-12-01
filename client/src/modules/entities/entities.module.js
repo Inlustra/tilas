@@ -12,19 +12,20 @@ export const ADD_ENTITIES = 'entities/ADD_ENTITIES'
 // Reducer
 
 const entityReducer = combineReducers({
-  users: userReducer
+  users: userReducer,
 })
 
 // Selectors
 
 export const getEntitiesState = state => state[moduleName]
-export const getUserEntity = (state, id) => selectUser(getEntitiesState(state), id)
+export const getUserEntity = (state, id) =>
+  selectUser(getEntitiesState(state), id)
 
 // Actions
 
 export const addEntities = (data, schema) => ({
   type: ADD_ENTITIES,
-  payload: normalize(data, schema).entities
+  payload: normalize(data, schema).entities,
 })
 
 export default entityReducer

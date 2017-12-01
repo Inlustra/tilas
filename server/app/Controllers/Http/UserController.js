@@ -1,13 +1,16 @@
 'use strict'
 
 const User = use('App/Models/User')
-const UserAlreadyExistsException = use('App/Exceptions/UserAlreadyExistsException')
+const UserAlreadyExistsException = use(
+  'App/Exceptions/UserAlreadyExistsException',
+)
 
 class UserController {
-
   async register({ request, auth }) {
     const { email, password, name } = request.all()
-    const existingUser = await User.query().where('email', email).first()
+    const existingUser = await User.query()
+      .where('email', email)
+      .first()
 
     if (existingUser) {
       throw new UserAlreadyExistsException()
@@ -16,7 +19,7 @@ class UserController {
     const user = await User.create({
       name,
       email,
-      password
+      password,
     })
 
     const token = await auth.generate(user)
@@ -28,11 +31,13 @@ class UserController {
     const email = request.input('email')
     const password = request.input('password')
     await auth.attempt(email, password)
-    const user = await User.query().where('email', email).first()
+    const user = await User.query()
+      .where('email', email)
+      .first()
     const token = await auth.generate(user)
     return {
       token,
-      user
+      user,
     }
   }
 }

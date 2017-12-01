@@ -14,7 +14,7 @@ const CLEAR = 'pages/login/CLEAR'
 // Reducer
 const initState = {
   error: null,
-  loading: false
+  loading: false,
 }
 
 const reducer = (state = initState, action) => {
@@ -42,7 +42,7 @@ export const isLoading = createSelector(getState, state => state.loading)
 
 export const submit = (email, password) => ({
   type: SUBMIT,
-  payload: { email, password }
+  payload: { email, password },
 })
 
 export const success = () => ({ type: SUCCESS })
@@ -55,13 +55,14 @@ export const submit$ = (action$, _, { authClient }) =>
     .ofType(SUBMIT)
     .map(({ payload }) => payload)
     .switchMap(({ email, password }) =>
-      authClient.login(email, password)
+      authClient
+        .login(email, password)
         .concatMap(({ user, token }) => [
           addEntities(user, userSchema),
           setAuthUser(user.id),
-          setAuthTokens(token.token, token.refreshToken)
+          setAuthTokens(token.token, token.refreshToken),
         ])
-        .catch(failed$(FAILED))
+        .catch(failed$(FAILED)),
     )
 
 export const epics = [submit$]

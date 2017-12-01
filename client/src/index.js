@@ -12,7 +12,7 @@ import apis from './api'
 const history = createBrowserHistory()
 const store = setupStore({
   history,
-  ...apis
+  ...apis,
 })
 
 store.subscribe(() => apis.httpClient.setApiToken(getToken(store.getState())))
@@ -25,7 +25,7 @@ render(
       </div>
     </ConnectedRouter>
   </Provider>,
-  document.querySelector('#root')
+  document.querySelector('#root'),
 )
 
 registerServiceWorker()

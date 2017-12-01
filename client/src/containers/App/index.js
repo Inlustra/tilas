@@ -10,23 +10,25 @@ import { withRouter } from 'react-router-dom'
 const App = ({ user }) => (
   <div>
     <header>
-      <Link to='/'>Home</Link>
-      <Link to='/login'>Login</Link>
-      <Link to='/register'>Register</Link>
-      <div style={{ float: 'right' }}><b>{user ? user.name : 'Not logged in'}</b></div>
+      <Link to="/">Home</Link>
+      <Link to="/login">Login</Link>
+      <Link to="/register">Register</Link>
+      <div style={{ float: 'right' }}>
+        <b>{user ? user.name : 'Not logged in'}</b>
+      </div>
     </header>
 
     <main>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/login' component={Login} />
-      <Route exact path='/register' component={Register} />
+      <Route exact path="/" component={Home} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/register" component={Register} />
     </main>
   </div>
 )
 
 const mapStateToProps = state => {
   return {
-    user: getUser(state)
+    user: getUser(state),
   }
 }
 

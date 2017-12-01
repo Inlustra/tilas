@@ -37,7 +37,7 @@
     "nodemon": "^1.12.1"
   },
   "devDependencies": {
-    "standard": "^10.0.3"
+    "prettier": "^1.8.2"
   },
   "autoload": {
     "App": "./app"

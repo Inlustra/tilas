@@ -3,15 +3,13 @@
 const Lucid = use('Lucid')
 
 class Til extends Lucid {
-
-  user () {
+  user() {
     return this.belongsTo('App/Model/User')
   }
 
-  categories () {
+  categories() {
     return this.hasMany('App/Model/Category')
   }
-
 }
 
 module.exports = Token

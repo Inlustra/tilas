@@ -10,7 +10,7 @@ export const SET_AUTH_TOKENS = 'auth/SET_AUTH_TOKENS'
 const initState = {
   userId: '',
   refreshToken: '',
-  token: ''
+  token: '',
 }
 
 const reducer = (state = initState, action) => {
@@ -28,20 +28,23 @@ const reducer = (state = initState, action) => {
 
 export const getAuthState = state => state[moduleName]
 export const getToken = createSelector(getAuthState, state => state.token)
-export const getRefreshToken = createSelector(getAuthState, state => state.refreshToken)
 export const getUserId = createSelector(getAuthState, state => state.userId)
 export const getUser = createSelector(state => state, getUserId, getUserEntity)
+export const getRefreshToken = createSelector(
+  getAuthState,
+  state => state.refreshToken,
+)
 
 // Actions
 
 export const setAuthUser = userId => ({
   type: SET_AUTH_USER,
-  payload: userId
+  payload: userId,
 })
 
 export const setAuthTokens = (token, refreshToken) => ({
   type: SET_AUTH_TOKENS,
-  payload: { token, refreshToken }
+  payload: { token, refreshToken },
 })
 
 export default reducer
