@@ -7,6 +7,7 @@ import loginPageReducer, {
     epics as loginPageEpics,
     moduleName as loginPageModuleName
 } from './containers/Login/login.module'
+
 import registerPageReducer, {
     epics as registerPageEpics,
     moduleName as registerPageModuleName

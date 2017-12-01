@@ -1,16 +1,13 @@
-import { submitLogin } from './login.module';
+import { submit, getError, clear } from './login.module';
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 class LoginPage extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            email: '',
-            password: ''
-        }
+    state = {
+        email: '',
+        password: ''
     }
 
     handleInputChange = ({ target }) => {
@@ -23,8 +20,20 @@ class LoginPage extends React.Component {
         event.preventDefault()
         const { email, password } = this.state
         if (email && password) {
-            this.props.submitLogin(email, password)
+            this.props.submit(email, password)
         }
+    }
+
+    parseErrors() {
+        const { error } = this.props
+        if (!error) return null
+        return error.status === 401
+            ? (<div>The username or password provided was incorrect</div>)
+            : (<div>An Unknown error occurred</div>)
+    }
+
+    componentWillUnmount() {
+        this.props.clear();
     }
 
     render() {
@@ -51,17 +60,22 @@ class LoginPage extends React.Component {
                     <div>
                         <button type="submit">Login</button>
                     </div>
+                    {this.parseErrors()}
                 </form>
             </div>
         )
     }
 }
 
+
+const mapStateToProps = state => ({
+    error: getError(state)
+})
 const mapDispatchToProps = dispatch => bindActionCreators({
-    submitLogin
+    submit, clear
 }, dispatch)
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(LoginPage)

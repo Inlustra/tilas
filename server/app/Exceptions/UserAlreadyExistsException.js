@@ -2,13 +2,13 @@
 
 const { LogicalException } = require('@adonisjs/generic-exceptions')
 
-class UserExistsException extends LogicalException {
+class UserAlreadyExistsException extends LogicalException {
   constructor(
-    message = "User Already Exists",
+    message = "USER_ALREADY_EXISTS",
     status = 422,
     code) {
     super(message, status, code)
   }
 }
 
-module.exports = UserExistsException
+module.exports = UserAlreadyExistsException

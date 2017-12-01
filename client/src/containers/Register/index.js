@@ -1,4 +1,4 @@
-import { submitRegister } from './register.module';
+import { getError, submit, clear } from './register.module';
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -21,8 +21,20 @@ class RegisterPage extends React.Component {
         event.preventDefault()
         const { name, email, password } = this.state
         if (name && email && password) {
-            this.props.submitRegister(name, email, password)
+            this.props.submit(name, email, password)
         }
+    }
+
+    componentWillUnmount() {
+        this.props.clear();
+    }
+
+    parseErrors() {
+        const { error } = this.props
+        if (!error) return null
+        return error.status === 422
+            ? (<div>A user already exists for the email provided</div>)
+            : (<div>An Unknown error occurred</div>)
     }
 
     render() {
@@ -57,17 +69,22 @@ class RegisterPage extends React.Component {
                     <div>
                         <button type="submit">Login</button>
                     </div>
+                    {this.parseErrors()}
                 </form>
             </div>
         )
     }
 }
 
+const mapStateToProps = state => ({
+    error: getError(state)
+})
+
 const mapDispatchToProps = dispatch => bindActionCreators({
-    submitRegister
+    submit, clear
 }, dispatch)
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(RegisterPage)

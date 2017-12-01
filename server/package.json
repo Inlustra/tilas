@@ -34,10 +34,11 @@
     "@adonisjs/shield": "^1.0.4",
     "eslint": "^4.10.0",
     "mysql": "^2.15.0",
-    "nodemon": "^1.12.1",
+    "nodemon": "^1.12.1"
+  },
+  "devDependencies": {
     "standard": "^10.0.3"
   },
-  "devDependencies": {},
   "autoload": {
     "App": "./app"
   },
