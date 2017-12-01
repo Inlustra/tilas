@@ -13,7 +13,7 @@ const App = ({ user }) => (
       <Link to='/'>Home</Link>
       <Link to='/login'>Login</Link>
       <Link to='/register'>Register</Link>
-      <div style={{ float: "right" }}><b>{user ? user.name : 'Not logged in'}</b></div>
+      <div style={{ float: 'right' }}><b>{user ? user.name : 'Not logged in'}</b></div>
     </header>
 
     <main>

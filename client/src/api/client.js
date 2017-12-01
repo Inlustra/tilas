@@ -1,38 +1,43 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs'
 
-class ApiClient {
+let apiToken
 
-    apiToken = null;
-
-    setApiToken(token) {
-        this.apiToken = token;
-    }
-
-    mergeHeaders(headers = {}) {
-        return this.apiToken
-            ? Object.assign(headers, { Authorization: 'Bearer ' + this.apiToken })
-            : headers;
-    }
-
-    get(url, headers) {
-        return Observable.ajax.get(url, this.mergeHeaders(headers));
-    }
-
-    put(url, body, headers) {
-        return Observable.ajax.put(url, body, this.mergeHeaders(headers));
-    }
-
-    post(url, body, headers) {
-        return Observable.ajax.post(url, body, this.mergeHeaders(headers));
-    }
-
-    patch(url, body, headers) {
-        return Observable.ajax.patch(url, body, this.mergeHeaders(headers));
-    }
-
-    delete(url, headers) {
-        return Observable.ajax.delete(url, this.mergeHeaders(headers));
-    }
+function setApiToken (token) {
+  apiToken = token
 }
 
-export default ApiClient;
+function mergeHeaders (headers = {}) {
+  return apiToken
+        ? Object.assign(headers, { Authorization: 'Bearer ' + apiToken })
+        : headers
+}
+
+function get (url, headers) {
+  return Observable.ajax.get(url, mergeHeaders(headers))
+}
+
+function put (url, body, headers) {
+  return Observable.ajax.put(url, body, mergeHeaders(headers))
+}
+
+function post (url, body, headers) {
+  return Observable.ajax.post(url, body, mergeHeaders(headers))
+}
+
+function patch (url, body, headers) {
+  return Observable.ajax.patch(url, body, mergeHeaders(headers))
+}
+
+function del (url, headers) {
+  return Observable.ajax.delete(url, this.mergeHeaders(headers))
+}
+
+export default {
+  setApiToken,
+  mergeHeaders,
+  get,
+  put,
+  post,
+  patch,
+  'delete': del
+}

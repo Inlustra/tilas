@@ -1,18 +1,21 @@
+import { submitLogin } from './login.module';
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { performLogin } from '../../modules/auth/auth.module';
 
 class LoginPage extends React.Component {
 
-    state = {
-        email: '',
-        password: ''
+    constructor() {
+        super();
+        this.state = {
+            email: '',
+            password: ''
+        }
     }
 
-    handleInputChange = ({target}) => {
+    handleInputChange = ({ target }) => {
         this.setState({
-          [target.name]: target.value
+            [target.name]: target.value
         });
     }
 
@@ -20,7 +23,7 @@ class LoginPage extends React.Component {
         event.preventDefault()
         const { email, password } = this.state
         if (email && password) {
-            this.props.performLogin(email, password)
+            this.props.submitLogin(email, password)
         }
     }
 
@@ -55,7 +58,7 @@ class LoginPage extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    performLogin
+    submitLogin
 }, dispatch)
 
 export default connect(

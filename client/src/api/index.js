@@ -1,3 +1,4 @@
-import ApiClient from './client';
+import httpClient from './client'
+import authClient from './auth.client'
 
-export default ApiClient
+export default { httpClient, authClient }

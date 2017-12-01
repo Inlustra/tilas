@@ -1,7 +1,7 @@
+import { submitRegister } from './register.module';
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { performRegister } from '../../modules/auth/auth.module';
 
 class RegisterPage extends React.Component {
 
@@ -21,14 +21,14 @@ class RegisterPage extends React.Component {
         event.preventDefault()
         const { name, email, password } = this.state
         if (name && email && password) {
-            this.props.performRegister(name, email, password)
+            this.props.submitRegister(name, email, password)
         }
     }
 
     render() {
         return (
             <div>
-                <h1>Login</h1>
+                <h1>Register</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label htmlFor="name">Name</label>
@@ -64,7 +64,7 @@ class RegisterPage extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    performRegister
+    submitRegister
 }, dispatch)
 
 export default connect(
