@@ -7,7 +7,7 @@ class Category extends Model {
     return this.hasMany('App/Model/Til')
   }
 
-  subcategories() {
+  subCategories() {
     return this.hasMany('App/Model/Category', 'parent_category_id')
   }
 

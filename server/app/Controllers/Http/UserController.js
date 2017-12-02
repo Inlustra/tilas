@@ -40,6 +40,10 @@ class UserController {
       user,
     }
   }
+
+  async me({request, response, auth}) {
+    return await auth.getUser()
+  }
 }
 
 module.exports = UserController

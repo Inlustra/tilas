@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "serve:dev": "npm run watch:database & npm run watch:server",
-    "watch:server": "./node_modules/.bin/nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
+    "watch:server": "./node_modules/.bin/nodemon --watch app --watch start --watch config --watch .env -x node server.js",
     "watch:database": "./node_modules/.bin/nodemon --watch database -x npm run migrate",
     "migrate": "adonis migration:rollback && adonis migration:run",
     "serve": "node server.js",

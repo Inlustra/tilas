@@ -1,7 +1,10 @@
 import { routerMiddleware, routerReducer } from 'react-router-redux'
-import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { combineEpics, createEpicMiddleware } from 'redux-observable'
+import adapter from 'redux-localstorage/lib/adapters/localStorage'
+import persistState, { mergePersistedState } from 'redux-localstorage'
+import localStorageFilter from 'redux-localstorage-filter'
 
 import loginPageReducer, {
   epics as loginPageEpics,
@@ -40,17 +43,19 @@ const epics = [...authEpics, ...loginPageEpics, ...registerPageEpics]
 // Setup Store
 
 const setupStore = dependencies => {
-  const store = createStore(
-    rootReducer,
-    composeWithDevTools(
-      applyMiddleware(
-        routerMiddleware(dependencies.history),
-        createEpicMiddleware(combineEpics(...epics), { dependencies }),
-      ),
-    ),
+  const storage = compose(localStorageFilter(authModuleName))(
+    adapter(window.localStorage),
   )
 
-  return store
+  const middleware = composeWithDevTools(
+    persistState(storage),
+    applyMiddleware(
+      routerMiddleware(dependencies.history),
+      createEpicMiddleware(combineEpics(...epics), { dependencies }),
+    ),
+  )
+  const reducer = compose(mergePersistedState())(rootReducer)
+  return createStore(reducer, middleware)
 }
 
 export default setupStore
