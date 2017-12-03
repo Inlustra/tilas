@@ -1,4 +1,4 @@
-import { getToken } from './modules/auth/auth.module'
+import { getRefreshToken, getToken } from './modules/auth/auth.module'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -7,15 +7,20 @@ import setupStore from './store'
 import App from './containers/App'
 import registerServiceWorker from './common/registerServiceWorker'
 import { createBrowserHistory } from 'history'
+import HttpClient from './common/httpClient'
+import AuthHttpClient from './common/authClient'
 import apis from './api'
 
 const history = createBrowserHistory()
+const httpClient = new HttpClient()
+const authHttpClient = new AuthHttpClient(httpClient)
+
 const store = setupStore({
   history,
-  ...apis,
+  ...apis(httpClient, authHttpClient),
 })
 
-store.subscribe(() => apis.httpClient.setApiToken(getToken(store.getState())))
+authHttpClient.init(store, getToken, getRefreshToken)
 
 render(
   <Provider store={store}>

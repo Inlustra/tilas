@@ -8,11 +8,12 @@ const UserAlreadyExistsException = use(
 class UserController {
   async register({ request, auth }) {
     const { email, password, name } = request.all()
-    const existingUser = await User.query()
+    const userAlreadyExists = await User.query()
       .where('email', email)
-      .first()
+      .getCount()
 
-    if (existingUser) {
+    console.log(userAlreadyExists);
+    if (userAlreadyExists) {
       throw new UserAlreadyExistsException()
     }
 
@@ -41,8 +42,17 @@ class UserController {
     }
   }
 
+  async refresh({request, response, auth}) {
+    const {refreshToken} = request.all()
+    const token = await auth
+    .newRefreshToken()
+    .generateForRefreshToken(refreshToken)
+    return token
+  }
+
   async me({request, response, auth}) {
-    return await auth.getUser()
+    const user = await auth.getUser()
+    return user
   }
 }
 

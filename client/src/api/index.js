@@ -1,4 +1,7 @@
-import httpClient from './client'
-import authClient from './auth.client'
+import AuthApi from './authApi';
 
-export default { httpClient, authClient }
+export default function(httpClient, authHttpClient) {
+    return {
+        authApi: new AuthApi(httpClient, authHttpClient)
+    }
+}
