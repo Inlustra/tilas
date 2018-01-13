@@ -1,26 +1,39 @@
-import { getRefreshToken, getToken } from './modules/auth/auth.module'
+import AuthApi from './api/authApi'
+import AuthClient from './common/authClient'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import setupStore from './store'
+import setupStore, { startApplication } from './store'
 import App from './containers/App'
 import registerServiceWorker from './common/registerServiceWorker'
 import { createBrowserHistory } from 'history'
 import HttpClient from './common/httpClient'
-import AuthHttpClient from './common/authClient'
-import apis from './api'
+import {
+  getToken,
+  getRefreshToken,
+  setAuthTokens,
+} from './modules/auth/auth.module'
 
 const history = createBrowserHistory()
 const httpClient = new HttpClient()
-const authHttpClient = new AuthHttpClient(httpClient)
+const authClient = new AuthClient()
 
-const store = setupStore({
+const dependencies = {
   history,
-  ...apis(httpClient, authHttpClient),
-})
+  httpClient,
+  authClient,
+  authApi: new AuthApi(httpClient, authClient),
+}
 
-authHttpClient.init(store, getToken, getRefreshToken)
+const store = setupStore(dependencies)
+authClient.getToken = () => getToken(store.getState())
+authClient.getRefreshToken = () => getRefreshToken(store.getState())
+authClient.setTokens = (token, refreshToken) => {
+  store.dispatch(setAuthTokens(token, refreshToken))
+}
+
+store.dispatch(startApplication())
 
 render(
   <Provider store={store}>

@@ -23,7 +23,7 @@ class UserController {
       password,
     })
 
-    const token = await auth.generate(user)
+    const token = await auth.withRefreshToken().generate(user)
 
     return { user, token }
   }
@@ -35,7 +35,7 @@ class UserController {
     const user = await User.query()
       .where('email', email)
       .first()
-    const token = await auth.generate(user)
+    const token = await auth.withRefreshToken().generate(user)
     return {
       token,
       user,

@@ -49,16 +49,15 @@ export const submit = (name, email, password) => ({
 })
 
 export const success = () => ({ type: SUCCESS })
-export const failed = error => ({ type: FAILED, payload: error })
 export const clear = () => ({ type: CLEAR })
 // Epics
 
-export const submit$ = (action$, _, { authClient }) =>
+export const submit$ = (action$, _, { authApi }) =>
   action$
     .ofType(SUBMIT)
     .map(({ payload }) => payload)
     .switchMap(({ name, email, password }) =>
-      authClient
+      authApi
         .register(name, email, password)
         .concatMap(({ user, token }) => [
           addEntities(user, userSchema),

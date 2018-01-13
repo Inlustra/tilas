@@ -21,8 +21,8 @@ import registerPageReducer, {
   moduleName as registerPageModuleName,
 } from './containers/Register/register.module'
 
-import authEpics from './modules/auth/auth.epics'
 import authReducer, {
+  epics as authEpics,
   moduleName as authModuleName,
   setAuthTokens,
 } from './modules/auth/auth.module'
@@ -43,16 +43,27 @@ const rootReducer = combineReducers({
   [authModuleName]: authReducer,
 })
 
+// Actions
+
+const START_APP = 'app/START_APP'
+
+export const startApplication = () => ({
+  type: START_APP,
+})
+
 // Epics
 
-const initApplication$ = (action$, _, { httpClient, authClient }) =>
-  action$
-    .ofType(localStorageActionTypes.INIT)
+const initApplication$ = (action$, _, { authApi }) =>
+  Observable.combineLatest(
+    action$.ofType(START_APP),
+    action$.ofType(localStorageActionTypes.INIT),
+  )
+    .map(([startAppAction, localStorageAction]) => localStorageAction)
+    .do(console.log)
     .map(({ payload }) => payload[authModuleName])
     .filter(auth => !!auth && !!auth.token)
-    .do(({ token }) => httpClient.setApiToken(token))
     .switchMap(payload =>
-      authClient
+      authApi
         .me()
         .map(user => addEntities(user, userSchema))
         .catch(() => Observable.of(setAuthTokens(null, null))),
@@ -66,6 +77,11 @@ const epics = [
   ...loginPageEpics,
   ...registerPageEpics,
 ]
+
+
+function getLocalStorageFilterKeys() {
+  return [];
+}
 
 // Setup Store
 

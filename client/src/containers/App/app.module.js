@@ -6,27 +6,17 @@ import { setAuthUser, setAuthTokens } from '../../modules/auth/auth.module'
 
 export const moduleName = 'login'
 
-const SUBMIT = 'pages/login/SUBMIT'
-const SUCCESS = 'pages/login/SUCCESS'
-const FAILED = 'pages/login/FAILED'
-const CLEAR = 'pages/login/CLEAR'
+const SUBMIT = '/login/SUBMIT'
 
 // Reducer
 const initState = {
-  error: null,
-  loading: false,
+  loading: true,
 }
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
-    case SUBMIT:
+    case START:
       return { ...state, loading: true, error: null }
-    case SUCCESS:
-      return { ...state, loading: false }
-    case FAILED:
-      return { ...state, loading: false, error: action.payload }
-    case CLEAR:
-      return initState
     default:
       return state
   }

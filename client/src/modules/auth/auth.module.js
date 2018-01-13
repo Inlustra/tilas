@@ -47,4 +47,15 @@ export const setAuthTokens = (token, refreshToken) => ({
   payload: { token, refreshToken },
 })
 
+// Epics
+
+export const setAuthTokens$ = action$ =>
+  action$
+    .ofType(SET_AUTH_TOKENS)
+    .map(({ payload }) => payload)
+    .filter(({ token, refreshToken }) => !token && !refreshToken)
+    .map(() => setAuthUser(null))
+
+export const epics = [setAuthTokens$]
+
 export default reducer
