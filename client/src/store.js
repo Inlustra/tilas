@@ -30,10 +30,44 @@ import entityReducer, {
   addEntities,
   moduleName as entitiesModuleName,
 } from './modules/entities/entities.module'
+import { createSelector } from 'reselect';
+
+// Store
+
+const START_APP = 'app/START_APP'
+const SET_LOADED = 'app/SET_LOADED'
+
+const rootModuleName = 'app'
+const initState = {
+  loaded: false
+}
+
+const reducer = (state = initState, action) => {
+  switch (action.type) {
+    case SET_LOADED:
+      return { ...state, loaded: true }
+    default:
+      return state
+  }
+}
+
+// Actions
+
+export const setLoaded = () => ({ type: SET_LOADED })
+
+export const startApplication = () => ({
+  type: START_APP,
+})
+
+// Selectors
+
+export const getRootState = (state) => state[rootModuleName]
+export const isLoaded = createSelector(getRootState, (state) => state.loaded)
 
 // Reducers
 
 const rootReducer = combineReducers({
+  [rootModuleName]: reducer,
   router: routerReducer,
   pages: combineReducers({
     [loginPageModuleName]: loginPageReducer,
@@ -41,14 +75,6 @@ const rootReducer = combineReducers({
   }),
   [entitiesModuleName]: entityReducer,
   [authModuleName]: authReducer,
-})
-
-// Actions
-
-const START_APP = 'app/START_APP'
-
-export const startApplication = () => ({
-  type: START_APP,
 })
 
 // Epics
@@ -59,15 +85,14 @@ const initApplication$ = (action$, _, { authApi }) =>
     action$.ofType(localStorageActionTypes.INIT),
   )
     .map(([startAppAction, localStorageAction]) => localStorageAction)
-    .do(console.log)
     .map(({ payload }) => payload[authModuleName])
     .filter(auth => !!auth && !!auth.token)
     .switchMap(payload =>
       authApi
         .me()
-        .map(user => addEntities(user, userSchema))
+        .concatMap(user => [addEntities(user, userSchema), setLoaded()])
         .catch(() => Observable.of(setAuthTokens(null, null))),
-    )
+  )
 
 const rootEpics = [initApplication$]
 
@@ -77,11 +102,6 @@ const epics = [
   ...loginPageEpics,
   ...registerPageEpics,
 ]
-
-
-function getLocalStorageFilterKeys() {
-  return [];
-}
 
 // Setup Store
 

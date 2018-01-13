@@ -27,6 +27,7 @@ const reducer = (state = initState, action) => {
 // Selectors
 
 export const getAuthState = state => state[moduleName]
+export const isLoggedIn = createSelector(getAuthState, state => !!state.userId)
 export const getToken = createSelector(getAuthState, state => state.token)
 export const getUserId = createSelector(getAuthState, state => state.userId)
 export const getUser = createSelector(state => state, getUserId, getUserEntity)
