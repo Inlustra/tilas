@@ -1,3 +1,4 @@
+import HealthApi from './api/healthApi'
 import AuthApi from './api/authApi'
 import AuthClient from './common/authClient'
 import React from 'react'
@@ -24,6 +25,7 @@ const dependencies = {
   httpClient,
   authClient,
   authApi: new AuthApi(httpClient, authClient),
+  healthApi: new HealthApi(httpClient, authClient)
 }
 
 const store = setupStore(dependencies)

@@ -3,6 +3,7 @@
 const Model = use('Model')
 
 class User extends Model {
+
   static get hidden() {
     return ['password']
   }
@@ -21,7 +22,13 @@ class User extends Model {
   }
 
   tils() {
-    return this.hasMany('App/Model/Til')
+    return this.hasMany('App/Models/Til')
+  }
+
+  roles() {
+    return this.belongsToMany('App/Models/Role')
+      .pivotTable('user_roles')
+      .withTimestamps()
   }
 }
 

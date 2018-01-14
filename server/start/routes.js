@@ -15,12 +15,21 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
 
-Route.post('/api/auth/login', 'UserController.login')
-Route.post('/api/auth/register', 'UserController.register')
-Route.post('/api/auth/refresh', 'UserController.refresh')
-Route.get('/api/auth/me', 'UserController.me').middleware(['auth'])
+// USERS
+Route
+  .resource('users', 'UsersController')
+  .only(['update', 'show'])
+
+// AUTH
+Route.post('/api/auth/login', 'AuthController.login')
+Route.post('/api/auth/register', 'AuthController.register')
+Route.post('/api/auth/refresh', 'AuthController.refresh')
+Route.get('/api/auth/me', 'AuthController.me').middleware(['auth'])
+
+// HEALTH
 Route.get('/api/ping', 'TestController.authedHelloWorld').middleware(['auth'])
+
+// REST
 Route.route('/api/*', async () => {}, ['GET', 'POST', 'OPTIONS', 'PUT', 'HEAD'])
 Route.route('*', async () => {}, ['GET'])

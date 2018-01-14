@@ -1,5 +1,5 @@
 
-class TestApi {
+class HealthApi {
 
     constructor(http, authHttp) {
       this.http = http
@@ -13,4 +13,4 @@ class TestApi {
     }
   }
 
-  export default TestApi
+  export default HealthApi

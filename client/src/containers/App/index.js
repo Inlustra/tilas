@@ -23,7 +23,7 @@ const Register = Loadable({
   loading: LoadingComponent,
 })
 
-const App = ({ user }) => (
+const App = ({ user, isLoggedIn }) => (
   <div>
     <header>
       <Link to="/">Home</Link>
@@ -39,8 +39,8 @@ const App = ({ user }) => (
       <Route exact path="/" component={Home} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Register} />
-      <PrivateRoute exact path="/dashboard" redirectTo="/login" component={Dashboard} />
-      </main>
+      <PrivateRoute exact path="/dashboard" authed={isLoggedIn} redirectTo="/login" component={Dashboard} />
+    </main>
   </div>
 )
 

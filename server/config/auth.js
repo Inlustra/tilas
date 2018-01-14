@@ -72,4 +72,14 @@ module.exports = {
       secret: 'self::app.appKey',
     },
   },
+  roles: {
+    admin: {
+      id: 1,
+      type: 'ADMIN'
+    },
+    banned: {
+      id: 2,
+      type: 'BANNED'
+    }
+  }
 }

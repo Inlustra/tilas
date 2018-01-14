@@ -12,6 +12,10 @@ import persistState, {
 } from 'redux-localstorage'
 import localStorageFilter from 'redux-localstorage-filter'
 
+import dashboardPageReducer, {
+  epics as dashboardPageEpics,
+  moduleName as dashboardPageModuleName,
+} from './containers/Dashboard/dashboard.module'
 import loginPageReducer, {
   epics as loginPageEpics,
   moduleName as loginPageModuleName,
@@ -30,7 +34,7 @@ import entityReducer, {
   addEntities,
   moduleName as entitiesModuleName,
 } from './modules/entities/entities.module'
-import { createSelector } from 'reselect';
+import { createSelector } from 'reselect'
 
 // Store
 
@@ -39,7 +43,7 @@ const SET_LOADED = 'app/SET_LOADED'
 
 const rootModuleName = 'app'
 const initState = {
-  loaded: false
+  loaded: false,
 }
 
 const reducer = (state = initState, action) => {
@@ -61,8 +65,8 @@ export const startApplication = () => ({
 
 // Selectors
 
-export const getRootState = (state) => state[rootModuleName]
-export const isLoaded = createSelector(getRootState, (state) => state.loaded)
+export const getRootState = state => state[rootModuleName]
+export const isLoaded = createSelector(getRootState, state => state.loaded)
 
 // Reducers
 
@@ -72,6 +76,7 @@ const rootReducer = combineReducers({
   pages: combineReducers({
     [loginPageModuleName]: loginPageReducer,
     [registerPageModuleName]: registerPageReducer,
+    [dashboardPageModuleName]: dashboardPageReducer,
   }),
   [entitiesModuleName]: entityReducer,
   [authModuleName]: authReducer,
@@ -92,7 +97,7 @@ const initApplication$ = (action$, _, { authApi }) =>
         .me()
         .concatMap(user => [addEntities(user, userSchema), setLoaded()])
         .catch(() => Observable.of(setAuthTokens(null, null))),
-  )
+    )
 
 const rootEpics = [initApplication$]
 
@@ -101,6 +106,7 @@ const epics = [
   ...authEpics,
   ...loginPageEpics,
   ...registerPageEpics,
+  ...dashboardPageEpics,
 ]
 
 // Setup Store

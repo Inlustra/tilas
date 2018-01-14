@@ -44,7 +44,6 @@ class AuthClient extends HttpClient {
   }
 
   request(ajaxRequest) {
-    console.log(ajaxRequest)
     return super
       .request({
         ...ajaxRequest,
