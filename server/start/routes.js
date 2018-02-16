@@ -17,9 +17,9 @@ const Route = use('Route')
 
 
 // USERS
-Route
-  .resource('users', 'UsersController')
-  .only(['update', 'show'])
+Route.put('/api/users/', 'UserController.update')
+Route.get('/api/users/:id', 'UserController.show')
+Route.get('/api/users/:id/posts', 'TilsController.listUserPosts')
 
 // AUTH
 Route.post('/api/auth/login', 'AuthController.login')

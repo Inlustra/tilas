@@ -1,6 +1,9 @@
 'use strict'
 
 const User = use('App/Models/User')
+
+const adminRole = use('Config').get('auth.roles.admin');
+
 const UserAlreadyExistsException = use(
   'App/Exceptions/UserAlreadyExistsException',
 )
@@ -22,6 +25,9 @@ class AuthController {
       email,
       password,
     })
+
+    await user.roles().attach([adminRole.id])
+    await user.load('roles')
 
     const token = await auth.withRefreshToken().generate(user)
 
@@ -52,10 +58,7 @@ class AuthController {
   }
 
   async me({request, response, auth}) {
-    const c = await auth.check();
-    console.log(c);
-    const user = await auth.user;
-    return user
+    return auth.getUser()
   }
 }
 

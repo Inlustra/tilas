@@ -15,6 +15,8 @@ class User extends Model {
      * check the hashPassword method
      */
     this.addHook('beforeSave', 'User.hashPassword')
+    this.addGlobalScope(builder => builder.with('roles')
+    )
   }
 
   tokens() {
@@ -30,6 +32,7 @@ class User extends Model {
       .pivotTable('user_roles')
       .withTimestamps()
   }
+
 }
 
 module.exports = User

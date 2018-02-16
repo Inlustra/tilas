@@ -12,5 +12,6 @@ RUN npm install
 RUN npm i -g nodemon
 
 EXPOSE 80
+EXPOSE 9229
 
 ENTRYPOINT npm run serve:dev

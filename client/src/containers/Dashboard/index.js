@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getHealth, load } from './dashboard.module'
+import { getHealth, pageLoad } from './dashboard.module'
 import { bindActionCreators } from 'redux'
 
 class DashboardPage extends React.Component {
 
   componentWillMount() {
-    this.props.load();
+    this.props.pageLoad();
   }
 
   myTils() {
@@ -19,9 +19,6 @@ class DashboardPage extends React.Component {
         <h1>Dashboard</h1>
         <div>{this.props.health ? this.props.health.message : 'Loading...'}</div>
         <h2>My Tils</h2>
-        <ol>
-
-        </ol>
       </div>
     )
   }
@@ -34,7 +31,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      load,
+      pageLoad,
     },
     dispatch,
   )

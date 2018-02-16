@@ -1,25 +1,25 @@
 version: '3.3'
 services:
 
-  mongo:
-    image: mongo:latest
+  database:
+    image: mysql
     volumes:
-      - './database/data/mongo:/data/db'
+      - './database/data/mysql:/var/lib/mysql'
     ports:
-      - '27017:27017'
+      - '3306:3306'
     env_file:
       - database.docker.env
 
-  auth-server:
+  server:
     ports:
       - '3333:3333'
       - '9229:9229'
     volumes:
-      - './auth-server/:/usr/tilas/auth-server/'
-      - './auth-server.dev.env:/usr/tilas/server/.env'
-    build: ./auth-server/
+      - './server/:/usr/tilas/server/'
+      - './server.dev.env:/usr/tilas/server/.env'
+    build: ./server/
     depends_on:
-      - mongo
+      - database
 
   client:
     ports:
