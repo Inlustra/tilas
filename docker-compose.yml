@@ -8,16 +8,15 @@ services:
     ports:
       - '27017:27017'
     env_file:
-      - database.docker.env
+      - database/docker.env
 
-  auth-server:
+  auth:
     ports:
       - '3333:3333'
       - '9229:9229'
     volumes:
-      - './auth-server/:/usr/tilas/auth-server/'
-      - './auth-server.dev.env:/usr/tilas/server/.env'
-    build: ./auth-server/
+      - './auth/:/usr/tilas/auth/'
+    build: ./auth/
     depends_on:
       - mongo
 
@@ -28,6 +27,6 @@ services:
       - './client/:/usr/tilas/client/'
     build: ./client/
     env_file:
-      - client.docker.env
+      - client/docker.env
     depends_on:
       - server

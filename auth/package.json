@@ -1,0 +1,44 @@
+{
+  "name": "nest-typescript-starter",
+  "version": "1.0.0",
+  "description": "Nest TypeScript starter repository",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "start:watch": "nodemon",
+    "prestart:prod": "tsc",
+    "start:prod": "node dist/main.js",
+    "test": "jest --config jest.json --runInBand"
+  },
+  "dependencies": {
+    "@inlustra/env-args": "^1.0.6",
+    "@nestjs/common": "^4.5.9",
+    "@nestjs/core": "^4.5.10",
+    "@nestjs/microservices": "^4.5.8",
+    "@nestjs/mongoose": "^3.0.1",
+    "@nestjs/testing": "^4.5.5",
+    "@nestjs/websockets": "^4.5.8",
+    "bcrypt": "^1.0.3",
+    "mongoose": "^5.0.6",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.1",
+    "redis": "^2.7.1",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^5.5.6",
+    "typescript": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^1.0.0",
+    "@types/jest": "^22.1.2",
+    "@types/lolex": "^2.1.1",
+    "@types/mongoose": "^5.0.2",
+    "@types/node": "^9.3.0",
+    "@types/passport": "^0.4.2",
+    "@types/passport-jwt": "^3.0.1",
+    "jest": "^22.3.0",
+    "lolex": "^2.3.2",
+    "nodemon": "^1.14.1",
+    "ts-jest": "^22.0.4",
+    "ts-node": "^4.1.0"
+  }
+}
